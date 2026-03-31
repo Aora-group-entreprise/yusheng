@@ -75,6 +75,8 @@ export type Database = {
           content: string
           created_at: string
           id: string
+          media_url: string | null
+          message_type: string
           read: boolean
           receiver_id: string
           sender_id: string
@@ -83,6 +85,8 @@ export type Database = {
           content: string
           created_at?: string
           id?: string
+          media_url?: string | null
+          message_type?: string
           read?: boolean
           receiver_id: string
           sender_id: string
@@ -91,6 +95,8 @@ export type Database = {
           content?: string
           created_at?: string
           id?: string
+          media_url?: string | null
+          message_type?: string
           read?: boolean
           receiver_id?: string
           sender_id?: string
@@ -122,6 +128,60 @@ export type Database = {
           id?: string
           pseudo?: string
           status?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_settings: {
+        Row: {
+          accent_color: string
+          auto_translate: boolean
+          blocked_users: string[] | null
+          created_at: string
+          id: string
+          language: string
+          notif_likes: boolean
+          notif_messages: boolean
+          notif_sounds: boolean
+          notif_vibration: boolean
+          profile_visibility: string
+          theme: string
+          translate_target: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          accent_color?: string
+          auto_translate?: boolean
+          blocked_users?: string[] | null
+          created_at?: string
+          id?: string
+          language?: string
+          notif_likes?: boolean
+          notif_messages?: boolean
+          notif_sounds?: boolean
+          notif_vibration?: boolean
+          profile_visibility?: string
+          theme?: string
+          translate_target?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          accent_color?: string
+          auto_translate?: boolean
+          blocked_users?: string[] | null
+          created_at?: string
+          id?: string
+          language?: string
+          notif_likes?: boolean
+          notif_messages?: boolean
+          notif_sounds?: boolean
+          notif_vibration?: boolean
+          profile_visibility?: string
+          theme?: string
+          translate_target?: string
           updated_at?: string
           user_id?: string
         }
