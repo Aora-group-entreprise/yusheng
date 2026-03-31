@@ -8,6 +8,12 @@ import InboxPage from "./pages/InboxPage";
 import ChatPage from "./pages/ChatPage";
 import FriendsPage from "./pages/FriendsPage";
 import ProfilePage from "./pages/ProfilePage";
+import NotificationsPage from "./pages/settings/NotificationsPage";
+import PrivacyPage from "./pages/settings/PrivacyPage";
+import AppearancePage from "./pages/settings/AppearancePage";
+import LanguagePage from "./pages/settings/LanguagePage";
+import TranslationPage from "./pages/settings/TranslationPage";
+import AdvancedSettingsPage from "./pages/settings/AdvancedSettingsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +41,12 @@ const App = () => (
           <Route path="/chat" element={<ProtectedRoute><ChatPage /></ProtectedRoute>} />
           <Route path="/friends" element={<ProtectedRoute><FriendsPage /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+          <Route path="/settings/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
+          <Route path="/settings/privacy" element={<ProtectedRoute><PrivacyPage /></ProtectedRoute>} />
+          <Route path="/settings/appearance" element={<ProtectedRoute><AppearancePage /></ProtectedRoute>} />
+          <Route path="/settings/language" element={<ProtectedRoute><LanguagePage /></ProtectedRoute>} />
+          <Route path="/settings/translation" element={<ProtectedRoute><TranslationPage /></ProtectedRoute>} />
+          <Route path="/settings/advanced" element={<ProtectedRoute><AdvancedSettingsPage /></ProtectedRoute>} />
           <Route path="/index" element={<Navigate to="/inbox" replace />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
