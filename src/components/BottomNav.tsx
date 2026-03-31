@@ -1,9 +1,8 @@
-import { MessageCircle, Inbox, UserPlus, User } from "lucide-react";
+import { Inbox, UserPlus, User } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const navItems = [
-  { icon: MessageCircle, label: "Chat", path: "/chat" },
   { icon: Inbox, label: "Inbox", path: "/inbox" },
   { icon: UserPlus, label: "Amis", path: "/friends" },
   { icon: User, label: "Profil", path: "/profile" },

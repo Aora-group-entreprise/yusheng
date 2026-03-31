@@ -5,6 +5,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import BottomNav from "@/components/BottomNav";
+import BannerAd from "@/components/BannerAd";
 
 interface Message {
   id: string;
@@ -152,6 +153,8 @@ const ChatPage = () => {
           <Video className="w-4 h-4" />
         </button>
       </div>
+
+      <BannerAd className="mx-4 mt-2" />
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto scrollbar-hide px-4 py-4 space-y-3">

@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { Settings, LogOut, Shield, Bell, Moon, ChevronRight, Sparkles, Camera } from "lucide-react";
+import { Settings, LogOut, Shield, Bell, Moon, ChevronRight, Sparkles, Camera, Globe, Languages } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -51,6 +51,8 @@ const ProfilePage = () => {
     { icon: Bell, label: "Notifications", desc: "Gérer les alertes" },
     { icon: Shield, label: "Confidentialité", desc: "Paramètres de sécurité" },
     { icon: Moon, label: "Apparence", desc: "Thème et affichage" },
+    { icon: Globe, label: "Langue", desc: "Changer la langue de l'app" },
+    { icon: Languages, label: "Traduction", desc: "Traduction auto des messages" },
     { icon: Settings, label: "Paramètres", desc: "Options avancées" },
   ];
 
