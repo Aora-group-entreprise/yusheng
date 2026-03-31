@@ -40,19 +40,19 @@ const ChatPage = () => {
   return (
     <div className="min-h-screen gradient-bg flex flex-col pb-20">
       {/* Header */}
-      <div className="glass border-b border-border/50 px-4 pt-10 pb-3 flex items-center gap-3">
+      <div className="glass border-b border-border/40 px-4 pt-10 pb-3 flex items-center gap-3">
         <button onClick={() => navigate("/inbox")} className="text-muted-foreground hover:text-foreground transition-colors">
           <ArrowLeft className="w-5 h-5" />
         </button>
-        <div className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center text-lg">🧑‍💻</div>
+        <div className="w-9 h-9 rounded-full bg-muted flex items-center justify-center text-lg">🧑‍💻</div>
         <div className="flex-1">
           <p className="text-sm font-semibold text-foreground">Akira</p>
-          <p className="text-[10px] text-primary">En ligne</p>
+          <p className="text-[10px] text-primary font-medium">En ligne</p>
         </div>
-        <button className="p-2 rounded-lg hover:bg-secondary/50 text-muted-foreground transition-colors">
+        <button className="p-2 rounded-lg hover:bg-muted text-muted-foreground transition-colors">
           <Phone className="w-4 h-4" />
         </button>
-        <button className="p-2 rounded-lg hover:bg-secondary/50 text-muted-foreground transition-colors">
+        <button className="p-2 rounded-lg hover:bg-muted text-muted-foreground transition-colors">
           <Video className="w-4 h-4" />
         </button>
       </div>
@@ -69,10 +69,10 @@ const ChatPage = () => {
           >
             <div className="max-w-[75%]">
               <div
-                className={`px-4 py-2.5 rounded-2xl text-sm ${
+                className={`px-4 py-2.5 rounded-2xl text-sm shadow-sm ${
                   msg.sender === "me"
-                    ? "gradient-primary text-primary-foreground rounded-br-md"
-                    : "glass text-foreground rounded-bl-md"
+                    ? "gradient-primary text-primary-foreground rounded-br-md glow-primary"
+                    : "bg-card border border-border/60 text-foreground rounded-bl-md"
                 }`}
               >
                 {msg.text}
@@ -97,9 +97,9 @@ const ChatPage = () => {
       </div>
 
       {/* Input */}
-      <div className="glass border-t border-border/50 px-3 py-3">
+      <div className="glass border-t border-border/40 px-3 py-3">
         <div className="flex items-center gap-2">
-          <button className="p-2 rounded-lg hover:bg-secondary/50 text-muted-foreground transition-colors">
+          <button className="p-2 rounded-lg hover:bg-muted text-muted-foreground transition-colors">
             <Camera className="w-5 h-5" />
           </button>
           <div className="flex-1 relative">
@@ -109,19 +109,19 @@ const ChatPage = () => {
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSend()}
               placeholder="Écrire un message..."
-              className="w-full pl-4 pr-10 py-2.5 rounded-xl bg-secondary/50 border border-border/50 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm transition-all"
+              className="w-full pl-4 pr-10 py-2.5 rounded-xl bg-card border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm transition-all shadow-sm"
             />
             <button className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
               <Smile className="w-4 h-4" />
             </button>
           </div>
-          <button className="p-2 rounded-lg hover:bg-secondary/50 text-muted-foreground transition-colors">
+          <button className="p-2 rounded-lg hover:bg-muted text-muted-foreground transition-colors">
             <Mic className="w-5 h-5" />
           </button>
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={handleSend}
-            className="p-2.5 rounded-xl gradient-primary text-primary-foreground glow-primary"
+            className="p-2.5 rounded-xl gradient-primary text-primary-foreground glow-primary shadow-md"
           >
             <Send className="w-4 h-4" />
           </motion.button>

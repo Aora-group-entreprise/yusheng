@@ -41,7 +41,7 @@ const AuthPage = () => {
           options: { data: { pseudo: form.pseudo } },
         });
         if (error) throw error;
-        toast.success("Compte créé ! Vérifiez votre email.");
+        toast.success("Compte créé !");
         navigate("/inbox");
       }
     } catch (err: any) {
@@ -52,9 +52,9 @@ const AuthPage = () => {
   };
 
   const inputClass = (field: string) =>
-    `w-full pl-11 pr-4 py-3.5 rounded-xl bg-secondary/50 border ${
-      errors[field] ? "border-destructive" : "border-border/50"
-    } text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all`;
+    `w-full pl-11 pr-4 py-3.5 rounded-xl bg-card border ${
+      errors[field] ? "border-destructive" : "border-border"
+    } text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 transition-all shadow-sm`;
 
   return (
     <div className="min-h-screen gradient-bg flex flex-col items-center justify-center px-6">
@@ -77,14 +77,14 @@ const AuthPage = () => {
         </div>
 
         {/* Toggle */}
-        <div className="flex gap-1 p-1 glass rounded-xl mb-8">
+        <div className="flex gap-1 p-1 bg-card border border-border rounded-xl mb-8 shadow-sm">
           {["Connexion", "Inscription"].map((label, i) => (
             <button
               key={label}
               onClick={() => setIsLogin(i === 0)}
               className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all ${
                 (i === 0 ? isLogin : !isLogin)
-                  ? "gradient-primary text-primary-foreground shadow-lg"
+                  ? "gradient-primary text-primary-foreground shadow-md glow-primary"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >

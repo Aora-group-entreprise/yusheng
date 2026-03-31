@@ -47,7 +47,7 @@ const FriendsPage = () => {
             placeholder="Rechercher un pseudo..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 rounded-xl bg-secondary/50 border border-border/50 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all text-sm"
+            className="w-full pl-10 pr-4 py-3 rounded-xl bg-card border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all text-sm shadow-sm"
           />
         </div>
       </div>
@@ -61,23 +61,23 @@ const FriendsPage = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.04 }}
-            className="glass rounded-xl p-3.5 flex items-center gap-3"
+            className="bg-card border border-border/60 rounded-xl p-3.5 flex items-center gap-3 shadow-sm hover:shadow-md hover:border-primary/20 transition-all"
           >
-            <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-2xl">
+            <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center text-2xl">
               {user.avatar}
             </div>
             <div className="flex-1">
               <p className="font-semibold text-foreground text-sm">{user.pseudo}</p>
-              <p className={`text-xs ${user.status === "En ligne" ? "text-primary" : "text-muted-foreground"}`}>
+              <p className={`text-xs ${user.status === "En ligne" ? "text-primary font-medium" : "text-muted-foreground"}`}>
                 {user.status}
               </p>
             </div>
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => toggleAdd(user.id)}
-              className={`p-2.5 rounded-xl transition-all ${
+              className={`p-2.5 rounded-xl transition-all shadow-sm ${
                 added.has(user.id)
-                  ? "bg-primary/20 text-primary"
+                  ? "bg-primary/10 text-primary border border-primary/30"
                   : "gradient-primary text-primary-foreground glow-primary"
               }`}
             >
