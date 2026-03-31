@@ -15,7 +15,7 @@ const BottomNav = () => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50">
-      <div className="glass border-t border-border/50 px-2 py-2 safe-area-bottom">
+      <div className="glass border-t border-border/40 px-2 py-2">
         <div className="flex items-center justify-around max-w-lg mx-auto">
           {navItems.map((item) => {
             const isActive = location.pathname === item.path;
@@ -28,7 +28,7 @@ const BottomNav = () => {
                 {isActive && (
                   <motion.div
                     layoutId="navIndicator"
-                    className="absolute inset-0 rounded-xl gradient-primary opacity-10"
+                    className="absolute inset-0 rounded-xl bg-primary/10"
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
                 )}
