@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff, Mail, Lock, User, Sparkles } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -63,7 +63,6 @@ const AuthPage = () => {
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-sm"
       >
-        {/* Logo */}
         <div className="text-center mb-10">
           <motion.div
             animate={{ scale: [1, 1.05, 1] }}
@@ -76,7 +75,6 @@ const AuthPage = () => {
           <p className="text-muted-foreground text-sm">Messagerie futuriste et premium</p>
         </div>
 
-        {/* Toggle */}
         <div className="flex gap-1 p-1 bg-card border border-border rounded-xl mb-8 shadow-sm">
           {["Connexion", "Inscription"].map((label, i) => (
             <button
@@ -93,7 +91,6 @@ const AuthPage = () => {
           ))}
         </div>
 
-        {/* Form */}
         <AnimatePresence mode="wait">
           <motion.div
             key={isLogin ? "login" : "signup"}
@@ -106,60 +103,38 @@ const AuthPage = () => {
               <div>
                 <div className="relative">
                   <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <input
-                    type="text"
-                    placeholder="Pseudo"
-                    value={form.pseudo}
+                  <input type="text" placeholder="Pseudo" value={form.pseudo}
                     onChange={(e) => setForm({ ...form, pseudo: e.target.value })}
-                    className={inputClass("pseudo")}
-                  />
+                    className={inputClass("pseudo")} />
                 </div>
                 {errors.pseudo && <p className="text-destructive text-xs mt-1">{errors.pseudo}</p>}
               </div>
             )}
-
             <div>
               <div className="relative">
                 <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={form.email}
+                <input type="email" placeholder="Email" value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className={inputClass("email")}
-                />
+                  className={inputClass("email")} />
               </div>
               {errors.email && <p className="text-destructive text-xs mt-1">{errors.email}</p>}
             </div>
-
             <div>
               <div className="relative">
                 <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Mot de passe"
-                  value={form.password}
+                <input type={showPassword ? "text" : "password"} placeholder="Mot de passe" value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })}
-                  className={inputClass("password")}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                >
+                  className={inputClass("password")} />
+                <button type="button" onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
               {errors.password && <p className="text-destructive text-xs mt-1">{errors.password}</p>}
             </div>
-
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={handleSubmit}
-              disabled={loading}
-              className="w-full py-3.5 rounded-xl gradient-primary text-primary-foreground font-semibold shadow-lg glow-primary disabled:opacity-50 transition-all"
-            >
+            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+              onClick={handleSubmit} disabled={loading}
+              className="w-full py-3.5 rounded-xl gradient-primary text-primary-foreground font-semibold shadow-lg glow-primary disabled:opacity-50 transition-all">
               {loading ? "Chargement..." : isLogin ? "Se connecter" : "Créer un compte"}
             </motion.button>
           </motion.div>
