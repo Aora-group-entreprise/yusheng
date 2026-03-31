@@ -154,6 +154,8 @@ const ChatPage = () => {
         </button>
       </div>
 
+      <BannerAd className="mx-4 mt-2" />
+
       {/* Messages */}
       <div className="flex-1 overflow-y-auto scrollbar-hide px-4 py-4 space-y-3">
         {messages.length === 0 && (

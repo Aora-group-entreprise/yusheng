@@ -35,6 +35,7 @@ const App = () => (
           <Route path="/chat" element={<ProtectedRoute><ChatPage /></ProtectedRoute>} />
           <Route path="/friends" element={<ProtectedRoute><FriendsPage /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+          <Route path="/index" element={<Navigate to="/inbox" replace />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

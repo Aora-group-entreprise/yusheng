@@ -51,6 +51,8 @@ const ProfilePage = () => {
     { icon: Bell, label: "Notifications", desc: "Gérer les alertes" },
     { icon: Shield, label: "Confidentialité", desc: "Paramètres de sécurité" },
     { icon: Moon, label: "Apparence", desc: "Thème et affichage" },
+    { icon: Globe, label: "Langue", desc: "Changer la langue de l'app" },
+    { icon: Languages, label: "Traduction", desc: "Traduction auto des messages" },
     { icon: Settings, label: "Paramètres", desc: "Options avancées" },
   ];
 
