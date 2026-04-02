@@ -8,6 +8,9 @@ import InboxPage from "./pages/InboxPage";
 import ChatPage from "./pages/ChatPage";
 import FriendsPage from "./pages/FriendsPage";
 import ProfilePage from "./pages/ProfilePage";
+import RoomsPage from "./pages/RoomsPage";
+import RoomChatPage from "./pages/RoomChatPage";
+import NotificationsListPage from "./pages/NotificationsListPage";
 import NotificationsPage from "./pages/settings/NotificationsPage";
 import PrivacyPage from "./pages/settings/PrivacyPage";
 import AppearancePage from "./pages/settings/AppearancePage";
@@ -36,18 +39,21 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/auth" element={<AuthPage />} />
-          <Route path="/" element={<Navigate to="/inbox" replace />} />
+          <Route path="/" element={<Navigate to="/rooms" replace />} />
           <Route path="/inbox" element={<ProtectedRoute><InboxPage /></ProtectedRoute>} />
           <Route path="/chat" element={<ProtectedRoute><ChatPage /></ProtectedRoute>} />
           <Route path="/friends" element={<ProtectedRoute><FriendsPage /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+          <Route path="/rooms" element={<ProtectedRoute><RoomsPage /></ProtectedRoute>} />
+          <Route path="/rooms/:roomId" element={<ProtectedRoute><RoomChatPage /></ProtectedRoute>} />
+          <Route path="/notifications" element={<ProtectedRoute><NotificationsListPage /></ProtectedRoute>} />
           <Route path="/settings/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
           <Route path="/settings/privacy" element={<ProtectedRoute><PrivacyPage /></ProtectedRoute>} />
           <Route path="/settings/appearance" element={<ProtectedRoute><AppearancePage /></ProtectedRoute>} />
           <Route path="/settings/language" element={<ProtectedRoute><LanguagePage /></ProtectedRoute>} />
           <Route path="/settings/translation" element={<ProtectedRoute><TranslationPage /></ProtectedRoute>} />
           <Route path="/settings/advanced" element={<ProtectedRoute><AdvancedSettingsPage /></ProtectedRoute>} />
-          <Route path="/index" element={<Navigate to="/inbox" replace />} />
+          <Route path="/index" element={<Navigate to="/rooms" replace />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
