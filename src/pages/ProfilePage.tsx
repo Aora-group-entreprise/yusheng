@@ -44,6 +44,8 @@ const ProfilePage = () => {
   const handleSignOut = async () => { await signOut(); navigate("/auth"); };
 
   const menuItems = [
+    { icon: Newspaper, label: t("profile.menu.feed"), desc: t("profile.menu.feed_desc"), route: "/feed" },
+    { icon: EyeOff, label: t("profile.menu.anonymous"), desc: t("profile.menu.anonymous_desc"), route: "/anonymous" },
     { icon: Bell, label: t("profile.menu.notifications"), desc: t("profile.menu.notifications_desc"), route: "/settings/notifications" },
     { icon: Shield, label: t("profile.menu.privacy"), desc: t("profile.menu.privacy_desc"), route: "/settings/privacy" },
     { icon: Moon, label: t("profile.menu.appearance"), desc: t("profile.menu.appearance_desc"), route: "/settings/appearance" },
