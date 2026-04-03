@@ -15,6 +15,7 @@ interface UserProfile {
   pseudo: string;
   avatar_url: string | null;
   status: string | null;
+  last_seen: string | null;
   isFriend: boolean;
 }
 
@@ -34,16 +35,16 @@ const FriendsPage = () => {
     const { data } = await supabase.from("friendships").select("user_id, friend_id").or(`user_id.eq.${user.id},friend_id.eq.${user.id}`).eq("status", "accepted");
     const friendIds = data?.map(f => f.user_id === user.id ? f.friend_id : f.user_id) || [];
     if (friendIds.length === 0) { setFriends([]); return; }
-    const { data: profiles } = await supabase.from("profiles").select("user_id, pseudo, avatar_url, status").in("user_id", friendIds);
-    setFriends(profiles?.map(p => ({ ...p, isFriend: true })) || []);
+    const { data: profiles } = await supabase.from("profiles").select("user_id, pseudo, avatar_url, status, last_seen").in("user_id", friendIds);
+    setFriends(profiles?.map((p: any) => ({ ...p, isFriend: true })) || []);
   };
 
   const searchUsers = async () => {
     if (!user) return;
-    const { data } = await supabase.from("profiles").select("user_id, pseudo, avatar_url, status").ilike("pseudo", `%${search}%`).neq("user_id", user.id).limit(10);
+    const { data } = await supabase.from("profiles").select("user_id, pseudo, avatar_url, status, last_seen").ilike("pseudo", `%${search}%`).neq("user_id", user.id).limit(10);
     const { data: friendships } = await supabase.from("friendships").select("friend_id, user_id").or(`user_id.eq.${user.id},friend_id.eq.${user.id}`);
     const friendSet = new Set(friendships?.map(f => f.user_id === user.id ? f.friend_id : f.user_id) || []);
-    setResults(data?.map(p => ({ ...p, isFriend: friendSet.has(p.user_id) })) || []);
+    setResults(data?.map((p: any) => ({ ...p, isFriend: friendSet.has(p.user_id) })) || []);
   };
 
   const addFriend = async (friendId: string) => {
@@ -54,6 +55,8 @@ const FriendsPage = () => {
     setResults(prev => prev.map(r => r.user_id === friendId ? { ...r, isFriend: true } : r));
     loadFriends();
   };
+
+  const isOnline = (p: UserProfile) => p.last_seen ? (Date.now() - new Date(p.last_seen).getTime()) < 5 * 60 * 1000 : false;
 
   const displayList = search.trim().length >= 2 ? results : friends;
 
@@ -79,13 +82,16 @@ const FriendsPage = () => {
         {displayList.map((p, i) => (
           <motion.div key={p.user_id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}
             className="bg-card border border-border/60 rounded-xl p-3.5 flex items-center gap-3 shadow-sm hover:shadow-md hover:border-primary/20 transition-all">
-            <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center text-lg font-semibold text-primary overflow-hidden">
-              {p.avatar_url ? <img src={p.avatar_url} alt="" className="w-full h-full object-cover" /> : p.pseudo.charAt(0).toUpperCase()}
+            <div className="relative cursor-pointer" onClick={() => navigate(`/user/${p.user_id}`)}>
+              <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center text-lg font-semibold text-primary overflow-hidden">
+                {p.avatar_url ? <img src={p.avatar_url} alt="" className="w-full h-full object-cover" /> : p.pseudo.charAt(0).toUpperCase()}
+              </div>
+              <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-card ${isOnline(p) ? "bg-green-500" : "bg-muted-foreground/40"}`} />
             </div>
-            <div className="flex-1">
+            <div className="flex-1 cursor-pointer" onClick={() => navigate(`/user/${p.user_id}`)}>
               <p className="font-semibold text-foreground text-sm">{p.pseudo}</p>
-              <p className={`text-xs ${p.status === "online" ? "text-primary font-medium" : "text-muted-foreground"}`}>
-                {p.status === "online" ? t("friends.online") : t("friends.offline")}
+              <p className={`text-xs ${isOnline(p) ? "text-green-600 font-medium" : "text-muted-foreground"}`}>
+                {isOnline(p) ? t("friends.online") : t("friends.offline")}
               </p>
             </div>
             {p.isFriend ? (

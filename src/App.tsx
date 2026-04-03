@@ -20,12 +20,15 @@ import AppearancePage from "./pages/settings/AppearancePage";
 import LanguagePage from "./pages/settings/LanguagePage";
 import TranslationPage from "./pages/settings/TranslationPage";
 import AdvancedSettingsPage from "./pages/settings/AdvancedSettingsPage";
+import UserProfilePage from "./pages/UserProfilePage";
 import NotFound from "./pages/NotFound";
+import { usePresence } from "@/hooks/usePresence";
 
 const queryClient = new QueryClient();
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
+  usePresence();
   if (loading) return (
     <div className="min-h-screen gradient-bg flex items-center justify-center">
       <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
@@ -48,6 +51,7 @@ const AppRoutes = () => (
     <Route path="/feed" element={<ProtectedRoute><FeedPage /></ProtectedRoute>} />
     <Route path="/anonymous" element={<ProtectedRoute><AnonymousMessagesPage /></ProtectedRoute>} />
     <Route path="/notifications" element={<ProtectedRoute><NotificationsListPage /></ProtectedRoute>} />
+    <Route path="/user/:userId" element={<ProtectedRoute><UserProfilePage /></ProtectedRoute>} />
     <Route path="/settings/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
     <Route path="/settings/privacy" element={<ProtectedRoute><PrivacyPage /></ProtectedRoute>} />
     <Route path="/settings/appearance" element={<ProtectedRoute><AppearancePage /></ProtectedRoute>} />

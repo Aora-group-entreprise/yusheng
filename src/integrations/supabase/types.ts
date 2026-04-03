@@ -256,6 +256,7 @@ export type Database = {
           avatar_url: string | null
           created_at: string
           id: string
+          last_seen: string | null
           pseudo: string
           status: string | null
           updated_at: string
@@ -265,6 +266,7 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string
           id?: string
+          last_seen?: string | null
           pseudo: string
           status?: string | null
           updated_at?: string
@@ -274,6 +276,7 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string
           id?: string
+          last_seen?: string | null
           pseudo?: string
           status?: string | null
           updated_at?: string

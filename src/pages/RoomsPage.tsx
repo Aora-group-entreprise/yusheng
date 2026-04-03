@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { Plus, Newspaper } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import BottomNav from "@/components/BottomNav";
 import BannerAd from "@/components/BannerAd";
@@ -33,6 +34,19 @@ const RoomsPage = () => {
         <h1 className="text-2xl font-bold font-display text-foreground">{t("rooms.title")}</h1>
         <p className="text-sm text-muted-foreground mt-0.5">{t("rooms.subtitle")}</p>
       </div>
+
+      {/* Publication buttons */}
+      <div className="px-5 mb-4 flex gap-3">
+        <button onClick={() => navigate("/feed")} className="flex-1 bg-primary/10 border border-primary/20 rounded-xl py-3 flex items-center justify-center gap-2 hover:bg-primary/20 transition-all">
+          <Newspaper className="w-4 h-4 text-primary" />
+          <span className="text-sm font-medium text-primary">{t("feed.publications")}</span>
+        </button>
+        <button onClick={() => navigate("/feed?create=1")} className="flex-1 gradient-primary rounded-xl py-3 flex items-center justify-center gap-2 glow-primary hover:opacity-90 transition-all active:scale-[0.97]">
+          <Plus className="w-4 h-4 text-primary-foreground" />
+          <span className="text-sm font-medium text-primary-foreground">{t("feed.create")}</span>
+        </button>
+      </div>
+
       <BannerAd className="mx-5 mb-4" />
       <div className="px-5 space-y-3">
         {rooms.map((room, i) => (

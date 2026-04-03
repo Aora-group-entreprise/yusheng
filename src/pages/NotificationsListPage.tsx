@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Bell, MessageCircle, Users, Check } from "lucide-react";
+import { Bell, MessageCircle, Users, Check, Heart, Eye } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -62,6 +62,8 @@ const NotificationsListPage = () => {
     switch (type) {
       case "message": return <MessageCircle className="w-5 h-5 text-primary" />;
       case "room": return <Users className="w-5 h-5 text-accent" />;
+      case "like": return <Heart className="w-5 h-5 text-destructive" />;
+      case "anonymous": return <Eye className="w-5 h-5 text-muted-foreground" />;
       default: return <Bell className="w-5 h-5 text-primary" />;
     }
   };
