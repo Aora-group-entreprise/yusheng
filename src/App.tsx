@@ -11,6 +11,8 @@ import FriendsPage from "./pages/FriendsPage";
 import ProfilePage from "./pages/ProfilePage";
 import RoomsPage from "./pages/RoomsPage";
 import RoomChatPage from "./pages/RoomChatPage";
+import FeedPage from "./pages/FeedPage";
+import AnonymousMessagesPage from "./pages/AnonymousMessagesPage";
 import NotificationsListPage from "./pages/NotificationsListPage";
 import NotificationsPage from "./pages/settings/NotificationsPage";
 import PrivacyPage from "./pages/settings/PrivacyPage";
@@ -43,6 +45,8 @@ const AppRoutes = () => (
     <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
     <Route path="/rooms" element={<ProtectedRoute><RoomsPage /></ProtectedRoute>} />
     <Route path="/rooms/:roomId" element={<ProtectedRoute><RoomChatPage /></ProtectedRoute>} />
+    <Route path="/feed" element={<ProtectedRoute><FeedPage /></ProtectedRoute>} />
+    <Route path="/anonymous" element={<ProtectedRoute><AnonymousMessagesPage /></ProtectedRoute>} />
     <Route path="/notifications" element={<ProtectedRoute><NotificationsListPage /></ProtectedRoute>} />
     <Route path="/settings/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
     <Route path="/settings/privacy" element={<ProtectedRoute><PrivacyPage /></ProtectedRoute>} />
