@@ -11,6 +11,8 @@ import FriendsPage from "./pages/FriendsPage";
 import ProfilePage from "./pages/ProfilePage";
 import RoomsPage from "./pages/RoomsPage";
 import RoomChatPage from "./pages/RoomChatPage";
+import FeedPage from "./pages/FeedPage";
+import AnonymousMessagesPage from "./pages/AnonymousMessagesPage";
 import NotificationsListPage from "./pages/NotificationsListPage";
 import NotificationsPage from "./pages/settings/NotificationsPage";
 import PrivacyPage from "./pages/settings/PrivacyPage";
