@@ -16,6 +16,7 @@ interface Conversation {
   lastMessage: string;
   lastMessageTime: string;
   unreadCount: number;
+  isOnline: boolean;
 }
 
 const InboxPage = () => {
@@ -44,12 +45,14 @@ const InboxPage = () => {
     }
     const userIds = Array.from(convMap.keys());
     if (userIds.length === 0) { setConversations([]); return; }
-    const { data: profiles } = await supabase.from("profiles").select("user_id, pseudo, avatar_url").in("user_id", userIds);
+    const { data: profiles } = await supabase.from("profiles").select("user_id, pseudo, avatar_url, last_seen").in("user_id", userIds);
     const profileMap = new Map(profiles?.map(p => [p.user_id, p]) || []);
     const convs: Conversation[] = userIds.map(uid => {
       const entry = convMap.get(uid)!;
       const profile = profileMap.get(uid);
-      return { userId: uid, pseudo: profile?.pseudo || "User", avatarUrl: profile?.avatar_url || null, lastMessage: entry.lastMsg.content, lastMessageTime: new Date(entry.lastMsg.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }), unreadCount: entry.unread };
+      const lastSeen = (profile as any)?.last_seen;
+      const isOnline = lastSeen ? (Date.now() - new Date(lastSeen).getTime()) < 5 * 60 * 1000 : false;
+      return { userId: uid, pseudo: profile?.pseudo || "User", avatarUrl: profile?.avatar_url || null, lastMessage: entry.lastMsg.content, lastMessageTime: new Date(entry.lastMsg.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }), unreadCount: entry.unread, isOnline };
     });
     setConversations(convs);
   };
@@ -80,8 +83,11 @@ const InboxPage = () => {
           <motion.div key={conv.userId} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
             onClick={() => navigate(`/chat?user=${conv.userId}`)}
             className="bg-card border border-border/60 rounded-xl p-3.5 flex items-center gap-3 cursor-pointer hover:shadow-md hover:border-primary/20 active:scale-[0.98] transition-all shadow-sm">
-            <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center text-lg font-semibold text-primary shrink-0 overflow-hidden">
-              {conv.avatarUrl ? <img src={conv.avatarUrl} alt="" className="w-full h-full object-cover" /> : conv.pseudo.charAt(0).toUpperCase()}
+            <div className="relative" onClick={(e) => { e.stopPropagation(); navigate(`/user/${conv.userId}`); }}>
+              <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center text-lg font-semibold text-primary shrink-0 overflow-hidden cursor-pointer">
+                {conv.avatarUrl ? <img src={conv.avatarUrl} alt="" className="w-full h-full object-cover" /> : conv.pseudo.charAt(0).toUpperCase()}
+              </div>
+              <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-card ${conv.isOnline ? "bg-green-500" : "bg-muted-foreground/40"}`} />
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between">

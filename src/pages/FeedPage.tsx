@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, MessageCircle, Share2, Image, Send, X, Plus, Newspaper } from "lucide-react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import BottomNav from "@/components/BottomNav";
@@ -8,7 +9,7 @@ import BannerAd from "@/components/BannerAd";
 import { t } from "@/lib/i18n";
 import { useAppSettings } from "@/providers/AppSettingsProvider";
 import { toast } from "sonner";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 interface Post {
   id: string;
@@ -32,10 +33,11 @@ interface Comment {
 
 const FeedPage = () => {
   const { user } = useAuth();
-  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   useAppSettings();
 
-  const [showCreate, setShowCreate] = useState(false);
+  const [showCreate, setShowCreate] = useState(searchParams.get("create") === "1");
   const [newContent, setNewContent] = useState("");
   const [posting, setPosting] = useState(false);
   const [commentingPostId, setCommentingPostId] = useState<string | null>(null);
@@ -46,21 +48,14 @@ const FeedPage = () => {
     queryKey: ["posts"],
     queryFn: async () => {
       if (!user) return [];
-      const { data: postsData } = await supabase
-        .from("posts")
-        .select("*")
-        .order("created_at", { ascending: false })
-        .limit(50);
+      const { data: postsData } = await supabase.from("posts").select("*").order("created_at", { ascending: false }).limit(50);
       if (!postsData) return [];
-
       const userIds = [...new Set(postsData.map(p => p.user_id))];
       const { data: profiles } = await supabase.from("profiles").select("user_id, pseudo, avatar_url").in("user_id", userIds);
       const profileMap = new Map(profiles?.map(p => [p.user_id, p]) || []);
-
       const postIds = postsData.map(p => p.id);
       const { data: likes } = await supabase.from("post_likes").select("post_id, user_id").in("post_id", postIds);
       const { data: commentCounts } = await supabase.from("post_comments").select("post_id").in("post_id", postIds);
-
       const likesMap = new Map<string, { count: number; mine: boolean }>();
       for (const l of likes || []) {
         const e = likesMap.get(l.post_id) || { count: 0, mine: false };
@@ -68,12 +63,10 @@ const FeedPage = () => {
         if (l.user_id === user.id) e.mine = true;
         likesMap.set(l.post_id, e);
       }
-
       const commentsMap = new Map<string, number>();
       for (const c of commentCounts || []) {
         commentsMap.set(c.post_id, (commentsMap.get(c.post_id) || 0) + 1);
       }
-
       return postsData.map(p => ({
         ...p,
         profile: profileMap.get(p.user_id) || { pseudo: "User", avatar_url: null },
@@ -130,11 +123,6 @@ const FeedPage = () => {
     refetch();
   };
 
-  const openComments = (postId: string) => {
-    setCommentingPostId(postId);
-    loadComments(postId);
-  };
-
   const handleShare = async (post: Post) => {
     if (navigator.share) {
       await navigator.share({ title: "Yusheng", text: post.content });
@@ -159,7 +147,6 @@ const FeedPage = () => {
         <p className="text-sm text-muted-foreground mt-0.5">{t("feed.subtitle")}</p>
       </div>
 
-      {/* Action buttons */}
       <div className="px-5 mb-4 flex gap-3">
         <button onClick={() => {}} className="flex-1 bg-primary/10 border border-primary/20 rounded-xl py-3 flex items-center justify-center gap-2 hover:bg-primary/20 transition-all">
           <Newspaper className="w-4 h-4 text-primary" />
@@ -173,36 +160,31 @@ const FeedPage = () => {
 
       <BannerAd className="mx-5 mb-4" />
 
-      {/* Posts */}
       <div className="px-5 space-y-4">
-        {posts.length === 0 && (
-          <div className="text-center py-16 text-muted-foreground text-sm">{t("feed.empty")}</div>
-        )}
+        {posts.length === 0 && <div className="text-center py-16 text-muted-foreground text-sm">{t("feed.empty")}</div>}
         {posts.map((post, i) => (
           <motion.div key={post.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}
             className="bg-card border border-border/60 rounded-2xl overflow-hidden shadow-sm">
-            {/* Header */}
             <div className="p-4 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-sm font-semibold text-primary overflow-hidden">
+              <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-sm font-semibold text-primary overflow-hidden cursor-pointer"
+                onClick={() => navigate(`/user/${post.user_id}`)}>
                 {post.profile?.avatar_url ? <img src={post.profile.avatar_url} alt="" className="w-full h-full object-cover" /> : post.profile?.pseudo?.charAt(0).toUpperCase()}
               </div>
-              <div className="flex-1">
+              <div className="flex-1 cursor-pointer" onClick={() => navigate(`/user/${post.user_id}`)}>
                 <p className="text-sm font-semibold text-foreground">{post.profile?.pseudo}</p>
                 <p className="text-[10px] text-muted-foreground">{timeAgo(post.created_at)}</p>
               </div>
             </div>
-            {/* Content */}
             <div className="px-4 pb-3">
               <p className="text-sm text-foreground leading-relaxed whitespace-pre-wrap">{post.content}</p>
             </div>
             {post.image_url && <img src={post.image_url} alt="" className="w-full max-h-80 object-cover" />}
-            {/* Actions */}
             <div className="px-4 py-3 border-t border-border/40 flex items-center gap-6">
               <button onClick={() => handleLike(post.id, post.liked_by_me)} className="flex items-center gap-1.5 group">
                 <Heart className={`w-5 h-5 transition-colors ${post.liked_by_me ? "fill-destructive text-destructive" : "text-muted-foreground group-hover:text-destructive"}`} />
                 <span className="text-xs text-muted-foreground">{post.likes_count || ""}</span>
               </button>
-              <button onClick={() => openComments(post.id)} className="flex items-center gap-1.5 group">
+              <button onClick={() => { setCommentingPostId(post.id); loadComments(post.id); }} className="flex items-center gap-1.5 group">
                 <MessageCircle className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
                 <span className="text-xs text-muted-foreground">{post.comments_count || ""}</span>
               </button>
@@ -212,8 +194,6 @@ const FeedPage = () => {
             </div>
           </motion.div>
         ))}
-
-        {/* Insert ad every 5 posts */}
         {posts.length > 4 && <BannerAd className="my-2" />}
       </div>
 
@@ -256,7 +236,8 @@ const FeedPage = () => {
                 {comments.length === 0 && <p className="text-sm text-muted-foreground text-center py-8">{t("feed.no_comments")}</p>}
                 {comments.map(c => (
                   <div key={c.id} className="flex gap-2.5">
-                    <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-xs font-semibold text-primary shrink-0 overflow-hidden">
+                    <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-xs font-semibold text-primary shrink-0 overflow-hidden cursor-pointer"
+                      onClick={() => { setCommentingPostId(null); navigate(`/user/${c.user_id}`); }}>
                       {c.profile?.avatar_url ? <img src={c.profile.avatar_url} alt="" className="w-full h-full object-cover" /> : c.profile?.pseudo?.charAt(0).toUpperCase()}
                     </div>
                     <div className="bg-muted/50 rounded-xl px-3 py-2 flex-1">
