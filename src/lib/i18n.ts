@@ -169,6 +169,48 @@ const EN = {
   // Banner Ad
   "ad.text": "Yusheng Premium — Ad-free",
 
+  // Feed
+  "feed.title": "📰 Feed",
+  "feed.subtitle": "Publications & news",
+  "feed.publications": "Publications",
+  "feed.create": "Create post",
+  "feed.empty": "No publications yet. Be the first! ✨",
+  "feed.posted": "Published! ✓",
+  "feed.new_post": "New post",
+  "feed.placeholder": "What's on your mind?",
+  "feed.publish": "Publish",
+  "feed.comments": "Comments",
+  "feed.no_comments": "No comments yet",
+  "feed.comment_placeholder": "Write a comment...",
+  "feed.copied": "Copied!",
+  "feed.just_now": "Just now",
+
+  // Anonymous messages
+  "anon.title": "🕵️ Anonymous",
+  "anon.subtitle": "Secret messages",
+  "anon.received": "Received",
+  "anon.send": "Send",
+  "anon.empty": "No anonymous messages yet 🔕",
+  "anon.anonymous": "Anonymous",
+  "anon.reply": "Reply",
+  "anon.search_user": "Search a user...",
+  "anon.sending_to": "Sending to",
+  "anon.identity_hidden": "Your identity will be hidden",
+  "anon.change": "Change",
+  "anon.message_placeholder": "Write your anonymous message...",
+  "anon.send_anonymous": "Send anonymously",
+  "anon.sent": "Message sent anonymously! ✓",
+  "anon.reply_anonymous": "Reply anonymously",
+  "anon.reply_placeholder": "Write your reply...",
+  "anon.send_reply": "Send reply",
+  "anon.replied": "Reply sent! ✓",
+
+  // Profile menu additions
+  "profile.menu.feed": "Feed",
+  "profile.menu.feed_desc": "Publications & news",
+  "profile.menu.anonymous": "Anonymous",
+  "profile.menu.anonymous_desc": "Secret messages",
+
   // Common
   "common.error": "Error",
   "common.save_error": "Save error",
