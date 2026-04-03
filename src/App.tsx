@@ -51,6 +51,7 @@ const AppRoutes = () => (
     <Route path="/feed" element={<ProtectedRoute><FeedPage /></ProtectedRoute>} />
     <Route path="/anonymous" element={<ProtectedRoute><AnonymousMessagesPage /></ProtectedRoute>} />
     <Route path="/notifications" element={<ProtectedRoute><NotificationsListPage /></ProtectedRoute>} />
+    <Route path="/user/:userId" element={<ProtectedRoute><UserProfilePage /></ProtectedRoute>} />
     <Route path="/settings/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
     <Route path="/settings/privacy" element={<ProtectedRoute><PrivacyPage /></ProtectedRoute>} />
     <Route path="/settings/appearance" element={<ProtectedRoute><AppearancePage /></ProtectedRoute>} />
