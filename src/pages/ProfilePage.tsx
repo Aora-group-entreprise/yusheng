@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import { Settings, LogOut, Shield, Bell, Moon, ChevronRight, Sparkles, Camera, Globe, Languages } from "lucide-react";
+import { Settings, LogOut, Shield, Bell, Moon, ChevronRight, Sparkles, Camera, Globe, Languages, Newspaper, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
