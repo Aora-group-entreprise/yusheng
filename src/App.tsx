@@ -20,7 +20,9 @@ import AppearancePage from "./pages/settings/AppearancePage";
 import LanguagePage from "./pages/settings/LanguagePage";
 import TranslationPage from "./pages/settings/TranslationPage";
 import AdvancedSettingsPage from "./pages/settings/AdvancedSettingsPage";
+import UserProfilePage from "./pages/UserProfilePage";
 import NotFound from "./pages/NotFound";
+import { usePresence } from "@/hooks/usePresence";
 
 const queryClient = new QueryClient();
 
