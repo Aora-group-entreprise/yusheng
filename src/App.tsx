@@ -45,6 +45,8 @@ const AppRoutes = () => (
     <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
     <Route path="/rooms" element={<ProtectedRoute><RoomsPage /></ProtectedRoute>} />
     <Route path="/rooms/:roomId" element={<ProtectedRoute><RoomChatPage /></ProtectedRoute>} />
+    <Route path="/feed" element={<ProtectedRoute><FeedPage /></ProtectedRoute>} />
+    <Route path="/anonymous" element={<ProtectedRoute><AnonymousMessagesPage /></ProtectedRoute>} />
     <Route path="/notifications" element={<ProtectedRoute><NotificationsListPage /></ProtectedRoute>} />
     <Route path="/settings/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
     <Route path="/settings/privacy" element={<ProtectedRoute><PrivacyPage /></ProtectedRoute>} />
