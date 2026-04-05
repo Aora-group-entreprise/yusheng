@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useSettings } from "@/hooks/useSettings";
 import BannerAd from "@/components/BannerAd";
+import ReportButton from "@/components/ReportButton";
 import { toast } from "sonner";
 import { t } from "@/lib/i18n";
 import { useAppSettings } from "@/providers/AppSettingsProvider";
