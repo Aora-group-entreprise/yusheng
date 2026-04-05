@@ -228,6 +228,7 @@ const ChatPage = () => {
         </div>
       )}
 
+      <CallModal isOpen={callOpen} onClose={() => setCallOpen(false)} otherUser={otherUser} callType={callType} />
       <BottomNav />
     </div>
   );
