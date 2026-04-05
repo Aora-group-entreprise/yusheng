@@ -129,7 +129,8 @@ const RoomChatPage = () => {
                   </div>
                 )}
                 <div className={`px-4 py-2.5 rounded-2xl text-sm shadow-sm ${isMe ? "gradient-primary text-primary-foreground rounded-br-md glow-primary" : "bg-card border border-border/60 text-foreground rounded-bl-md"}`}>
-                  {msg.translated_content && !isMe && !msg.showOriginal ? (
+                  <div className="flex items-start gap-1">
+                    <div className="flex-1">
                     <div>
                       <span>{msg.translated_content}</span>
                       <button onClick={() => toggleOriginal(msg.id)} className="block text-[10px] opacity-60 mt-1 italic underline">{t("translation.view_original")}</button>
