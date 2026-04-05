@@ -2,26 +2,25 @@ import { Inbox, UserPlus, User, Globe, Bell } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useUnreadNotifications } from "@/hooks/useNotifications";
-import { t } from "@/lib/i18n";
 import { useAppSettings } from "@/providers/AppSettingsProvider";
 
 const BottomNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const unreadCount = useUnreadNotifications();
-  useAppSettings(); // re-render on lang change
+  useAppSettings();
 
   const navItems = [
-    { icon: Inbox, label: t("nav.inbox"), path: "/inbox" },
-    { icon: UserPlus, label: t("nav.friends"), path: "/friends" },
-    { icon: Globe, label: t("nav.rooms"), path: "/rooms", center: true },
-    { icon: Bell, label: t("nav.notifs"), path: "/notifications" },
-    { icon: User, label: t("nav.profile"), path: "/profile" },
+    { icon: Inbox, path: "/inbox" },
+    { icon: UserPlus, path: "/friends" },
+    { icon: Globe, path: "/rooms", center: true },
+    { icon: Bell, path: "/notifications" },
+    { icon: User, path: "/profile" },
   ];
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50">
-      <div className="glass border-t border-border/40 px-2 py-2">
+      <div className="glass border-t border-border/40 px-4 py-2.5 safe-area-bottom">
         <div className="flex items-center justify-around max-w-lg mx-auto">
           {navItems.map((item) => {
             const isActive = location.pathname === item.path || location.pathname.startsWith(item.path + "/");
@@ -29,18 +28,17 @@ const BottomNav = () => {
 
             if (isCenter) {
               return (
-                <button key={item.path} onClick={() => navigate(item.path)} className="relative -mt-5">
+                <button key={item.path} onClick={() => navigate(item.path)} className="relative -mt-6">
                   <motion.div whileTap={{ scale: 0.9 }}
-                    className={`w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all ${isActive ? "gradient-primary glow-primary" : "bg-primary/90 hover:bg-primary"}`}>
-                    <item.icon className="w-6 h-6 text-primary-foreground" />
+                    className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center shadow-lg transition-all ${isActive ? "gradient-primary glow-primary" : "bg-primary/90 hover:bg-primary"}`}>
+                    <item.icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground" />
                   </motion.div>
-                  <span className={`text-[9px] font-medium block text-center mt-1 ${isActive ? "text-primary" : "text-muted-foreground"}`}>{item.label}</span>
                 </button>
               );
             }
 
             return (
-              <button key={item.path} onClick={() => navigate(item.path)} className="relative flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl transition-colors">
+              <button key={item.path} onClick={() => navigate(item.path)} className="relative flex items-center justify-center w-10 h-10 rounded-xl transition-colors">
                 {isActive && <motion.div layoutId="navIndicator" className="absolute inset-0 rounded-xl bg-primary/10" transition={{ type: "spring", stiffness: 400, damping: 30 }} />}
                 <div className="relative">
                   <item.icon className={`w-5 h-5 transition-colors ${isActive ? "text-primary" : "text-muted-foreground"}`} />
@@ -50,7 +48,6 @@ const BottomNav = () => {
                     </div>
                   )}
                 </div>
-                <span className={`text-[10px] font-medium transition-colors ${isActive ? "text-primary" : "text-muted-foreground"}`}>{item.label}</span>
               </button>
             );
           })}
