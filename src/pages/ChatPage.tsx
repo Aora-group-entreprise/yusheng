@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, Phone, Video, Send, Smile, Mic, Heart, ThumbsUp, Image, Copy, Play, X } from "lucide-react";
+import CallModal from "@/components/CallModal";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -28,6 +29,8 @@ const ChatPage = () => {
   const [otherUser, setOtherUser] = useState<{ pseudo: string; avatar_url: string | null; last_seen: string | null } | null>(null);
   const [showEmojis, setShowEmojis] = useState(false);
   const [previewMedia, setPreviewMedia] = useState<string | null>(null);
+  const [callOpen, setCallOpen] = useState(false);
+  const [callType, setCallType] = useState<"audio" | "video">("audio");
   const { user } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -158,8 +161,8 @@ const ChatPage = () => {
             {isOnline ? "En ligne" : "Hors ligne"}
           </p>
         </div>
-        <button className="p-2 rounded-lg hover:bg-muted text-muted-foreground"><Phone className="w-4 h-4" /></button>
-        <button className="p-2 rounded-lg hover:bg-muted text-muted-foreground"><Video className="w-4 h-4" /></button>
+        <button onClick={() => { setCallType("audio"); setCallOpen(true); }} className="p-2 rounded-lg hover:bg-muted text-muted-foreground"><Phone className="w-4 h-4" /></button>
+        <button onClick={() => { setCallType("video"); setCallOpen(true); }} className="p-2 rounded-lg hover:bg-muted text-muted-foreground"><Video className="w-4 h-4" /></button>
       </div>
 
       <BannerAd className="mx-4 mt-2" />
@@ -225,6 +228,7 @@ const ChatPage = () => {
         </div>
       )}
 
+      <CallModal isOpen={callOpen} onClose={() => setCallOpen(false)} otherUser={otherUser} callType={callType} />
       <BottomNav />
     </div>
   );
