@@ -129,8 +129,7 @@ const RoomChatPage = () => {
                   </div>
                 )}
                 <div className={`px-4 py-2.5 rounded-2xl text-sm shadow-sm ${isMe ? "gradient-primary text-primary-foreground rounded-br-md glow-primary" : "bg-card border border-border/60 text-foreground rounded-bl-md"}`}>
-                  <div className="flex items-start gap-1">
-                    <div className="flex-1">
+                  {msg.translated_content && !isMe && !msg.showOriginal ? (
                     <div>
                       <span>{msg.translated_content}</span>
                       <button onClick={() => toggleOriginal(msg.id)} className="block text-[10px] opacity-60 mt-1 italic underline">{t("translation.view_original")}</button>
@@ -144,9 +143,12 @@ const RoomChatPage = () => {
                     <span>{msg.content}</span>
                   )}
                 </div>
-                <span className="text-[10px] text-muted-foreground ml-1">
-                  {new Date(msg.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                </span>
+                <div className="flex items-center justify-between mt-1">
+                  <span className="text-[10px] text-muted-foreground ml-1">
+                    {new Date(msg.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                  </span>
+                  {!isMe && <ReportButton contentType="room_message" contentId={msg.id} reportedUserId={msg.user_id} />}
+                </div>
               </div>
             </motion.div>
           );
