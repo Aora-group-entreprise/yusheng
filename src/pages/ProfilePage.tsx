@@ -55,8 +55,8 @@ const ProfilePage = () => {
   ];
 
   return (
-    <div className="min-h-screen gradient-bg pb-20">
-      <div className="px-5 pt-12 pb-6 text-center">
+    <div className="min-h-screen gradient-bg pb-16">
+      <div className="px-4 sm:px-6 pt-10 sm:pt-12 pb-5 text-center">
         <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="relative w-24 h-24 mx-auto mb-4">
           <div className="w-24 h-24 rounded-full gradient-primary flex items-center justify-center glow-primary shadow-lg overflow-hidden">
             {profile?.avatar_url ? <img src={profile.avatar_url} alt="" className="w-full h-full object-cover" /> : <Sparkles className="w-10 h-10 text-primary-foreground" />}

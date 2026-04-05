@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, MessageCircle, Share2, Image, Send, X, Plus, Newspaper } from "lucide-react";
+import ReportButton from "@/components/ReportButton";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -141,26 +142,26 @@ const FeedPage = () => {
   };
 
   return (
-    <div className="min-h-screen gradient-bg pb-20">
-      <div className="px-5 pt-12 pb-4">
-        <h1 className="text-2xl font-bold font-display text-foreground">{t("feed.title")}</h1>
-        <p className="text-sm text-muted-foreground mt-0.5">{t("feed.subtitle")}</p>
+    <div className="min-h-screen gradient-bg pb-16">
+      <div className="px-4 sm:px-6 pt-10 sm:pt-12 pb-3">
+        <h1 className="text-xl sm:text-2xl font-bold font-display text-foreground">{t("feed.title")}</h1>
+        <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">{t("feed.subtitle")}</p>
       </div>
 
-      <div className="px-5 mb-4 flex gap-3">
-        <button onClick={() => {}} className="flex-1 bg-primary/10 border border-primary/20 rounded-xl py-3 flex items-center justify-center gap-2 hover:bg-primary/20 transition-all">
+      <div className="px-4 sm:px-6 mb-3 flex gap-2 sm:gap-3">
+        <button onClick={() => {}} className="flex-1 bg-primary/10 border border-primary/20 rounded-xl py-2.5 sm:py-3 flex items-center justify-center gap-2 hover:bg-primary/20 transition-all">
           <Newspaper className="w-4 h-4 text-primary" />
-          <span className="text-sm font-medium text-primary">{t("feed.publications")}</span>
+          <span className="text-xs sm:text-sm font-medium text-primary">{t("feed.publications")}</span>
         </button>
-        <button onClick={() => setShowCreate(true)} className="flex-1 gradient-primary rounded-xl py-3 flex items-center justify-center gap-2 glow-primary hover:opacity-90 transition-all active:scale-[0.97]">
+        <button onClick={() => setShowCreate(true)} className="flex-1 gradient-primary rounded-xl py-2.5 sm:py-3 flex items-center justify-center gap-2 glow-primary hover:opacity-90 transition-all active:scale-[0.97]">
           <Plus className="w-4 h-4 text-primary-foreground" />
-          <span className="text-sm font-medium text-primary-foreground">{t("feed.create")}</span>
+          <span className="text-xs sm:text-sm font-medium text-primary-foreground">{t("feed.create")}</span>
         </button>
       </div>
 
-      <BannerAd className="mx-5 mb-4" />
+      <BannerAd className="mx-4 sm:mx-6 mb-3" />
 
-      <div className="px-5 space-y-4">
+      <div className="px-4 sm:px-6 space-y-3">
         {posts.length === 0 && <div className="text-center py-16 text-muted-foreground text-sm">{t("feed.empty")}</div>}
         {posts.map((post, i) => (
           <motion.div key={post.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}
@@ -174,6 +175,9 @@ const FeedPage = () => {
                 <p className="text-sm font-semibold text-foreground">{post.profile?.pseudo}</p>
                 <p className="text-[10px] text-muted-foreground">{timeAgo(post.created_at)}</p>
               </div>
+              {post.user_id !== user?.id && (
+                <ReportButton contentType="post" contentId={post.id} reportedUserId={post.user_id} />
+              )}
             </div>
             <div className="px-4 pb-3">
               <p className="text-sm text-foreground leading-relaxed whitespace-pre-wrap">{post.content}</p>

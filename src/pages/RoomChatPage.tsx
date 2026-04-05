@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useSettings } from "@/hooks/useSettings";
 import BannerAd from "@/components/BannerAd";
+import ReportButton from "@/components/ReportButton";
 import { toast } from "sonner";
 import { t } from "@/lib/i18n";
 import { useAppSettings } from "@/providers/AppSettingsProvider";
@@ -142,9 +143,12 @@ const RoomChatPage = () => {
                     <span>{msg.content}</span>
                   )}
                 </div>
-                <span className="text-[10px] text-muted-foreground ml-1">
-                  {new Date(msg.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                </span>
+                <div className="flex items-center justify-between mt-1">
+                  <span className="text-[10px] text-muted-foreground ml-1">
+                    {new Date(msg.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                  </span>
+                  {!isMe && <ReportButton contentType="room_message" contentId={msg.id} reportedUserId={msg.user_id} />}
+                </div>
               </div>
             </motion.div>
           );

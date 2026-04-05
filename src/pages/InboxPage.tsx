@@ -60,10 +60,10 @@ const InboxPage = () => {
   const filtered = conversations.filter(c => c.pseudo.toLowerCase().includes(search.toLowerCase()));
 
   return (
-    <div className="min-h-screen gradient-bg pb-20">
-      <div className="px-5 pt-12 pb-4">
-        <h1 className="text-2xl font-bold font-display text-foreground">{t("inbox.title")}</h1>
-        <p className="text-sm text-muted-foreground mt-0.5">{conversations.length} {t("inbox.conversations")}</p>
+    <div className="min-h-screen gradient-bg pb-16">
+      <div className="px-4 sm:px-6 pt-10 sm:pt-12 pb-3">
+        <h1 className="text-xl sm:text-2xl font-bold font-display text-foreground">{t("inbox.title")}</h1>
+        <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">{conversations.length} {t("inbox.conversations")}</p>
       </div>
       <div className="px-5 mb-4">
         <div className="relative">
