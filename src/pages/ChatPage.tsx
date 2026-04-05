@@ -161,8 +161,8 @@ const ChatPage = () => {
             {isOnline ? "En ligne" : "Hors ligne"}
           </p>
         </div>
-        <button className="p-2 rounded-lg hover:bg-muted text-muted-foreground"><Phone className="w-4 h-4" /></button>
-        <button className="p-2 rounded-lg hover:bg-muted text-muted-foreground"><Video className="w-4 h-4" /></button>
+        <button onClick={() => { setCallType("audio"); setCallOpen(true); }} className="p-2 rounded-lg hover:bg-muted text-muted-foreground"><Phone className="w-4 h-4" /></button>
+        <button onClick={() => { setCallType("video"); setCallOpen(true); }} className="p-2 rounded-lg hover:bg-muted text-muted-foreground"><Video className="w-4 h-4" /></button>
       </div>
 
       <BannerAd className="mx-4 mt-2" />
