@@ -175,6 +175,9 @@ const FeedPage = () => {
                 <p className="text-sm font-semibold text-foreground">{post.profile?.pseudo}</p>
                 <p className="text-[10px] text-muted-foreground">{timeAgo(post.created_at)}</p>
               </div>
+              {post.user_id !== user?.id && (
+                <ReportButton contentType="post" contentId={post.id} reportedUserId={post.user_id} />
+              )}
             </div>
             <div className="px-4 pb-3">
               <p className="text-sm text-foreground leading-relaxed whitespace-pre-wrap">{post.content}</p>
