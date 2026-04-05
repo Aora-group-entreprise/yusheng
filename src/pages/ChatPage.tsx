@@ -29,6 +29,8 @@ const ChatPage = () => {
   const [otherUser, setOtherUser] = useState<{ pseudo: string; avatar_url: string | null; last_seen: string | null } | null>(null);
   const [showEmojis, setShowEmojis] = useState(false);
   const [previewMedia, setPreviewMedia] = useState<string | null>(null);
+  const [callOpen, setCallOpen] = useState(false);
+  const [callType, setCallType] = useState<"audio" | "video">("audio");
   const { user } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
