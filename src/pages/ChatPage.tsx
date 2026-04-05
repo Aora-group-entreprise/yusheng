@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, Phone, Video, Send, Smile, Mic, Heart, ThumbsUp, Image, Copy, Play, X } from "lucide-react";
+import CallModal from "@/components/CallModal";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
